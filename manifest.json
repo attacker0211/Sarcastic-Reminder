@@ -1,0 +1,14 @@
+{
+  "name": "Friendly Reminder",
+  "version": "1.0",
+  "description": "A very friendly extension that helps",
+  "permissions": ["activeTab", "declarativeContent", "storage"],
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+  "page_action": {
+    "default_popup": "popup.html",
+  },
+  "manifest_version": 2
+}
