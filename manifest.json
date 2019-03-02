@@ -1,14 +1,31 @@
 {
   "name": "Friendly Reminder",
   "version": "1.0",
-  "description": "A very friendly extension that helps",
-  "permissions": ["activeTab", "declarativeContent", "storage"],
+  "description": "Friendly Reminder, help you get back to your life.",
+  "permissions": [
+     "identity"
+   ],
+  "manifest_version": 2,
+  "browser_action": {
+    "default_title": "Friendly Reminder, help you get back to your life."
+  },
+  "key": "-----BEGIN PUBLIC KEY-----
+  MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAkBLtHQNv+sKxlOoaGTYp
+  SkXr9pb9+cLQhMxu4GS/lxKkIB87IgPmbJ0c3xhd/PZPYICkmt/1OE+PGFIlO5E7
+  hoWVWkhl1dXXpU2bfUB7aEQg2cofdmqmI8HbTikj9FoeItxCOgALLhwMhOqTvHAa
+  hsp8PHCLvWjkFPD6rj+xqRXEiGttHaHiWSABKEJ7FH6wxfw7EwgAIY0PMg0ynWzY
+  kBQ+exj5cA2RKqrBUOU83ZFuCyKA4O15xgPZiPiO+DIglWv3pPJnvIlY98gm9qb1
+  ym/5vY3wzrPXORVlspEFhF//kco8mWv+rZZSxASx1VE6Q98T5HYIPNN5MWptrSad
+  HwIDAQAB
+  -----END PUBLIC KEY-----",
+  "oauth2": {
+    "client_id": "891392447446-4jro5e1fugd7g9tfvt7mvlploegp570o.apps.googleusercontent.com",
+    "scopes":[""]
+  },
   "background": {
-    "scripts": ["background.js"],
+    "scripts": [
+      "background.js"
+    ],
     "persistent": false
-  },
-  "page_action": {
-    "default_popup": "popup.html",
-  },
-  "manifest_version": 2
+  }
 }
