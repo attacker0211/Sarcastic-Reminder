@@ -1,7 +1,7 @@
 {
   "name": "Friendly Reminder",
   "version": "1.0",
-  "description": "A very friendly extension that helps",
+  "description": "A very \"friendly\" extension that helps you stop fucking procastinating.",
   "permissions": ["activeTab", "declarativeContent", "storage"],
   "background": {
     "scripts": ["background.js"],
