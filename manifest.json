@@ -3,7 +3,11 @@
   "version": "1.0",
   "description": "Friendly Reminder, help you get back to your life.",
   "permissions": [
-    "identity", "activeTab", "declarativeContent", "storage"
+    "identity",
+    "activeTab",
+    "declarativeContent",
+    "storage",
+    "notifications"
   ],
   "browser_action": {
     "default_title": "Friendly Reminder, help you get back to your life."
@@ -25,12 +29,14 @@
   },
   "background": {
     "scripts": [
-      "background.js"
+      "background.js",
+      "noti.js"
     ],
     "persistent": false
   },
   "content_security_policy": "script-src 'self' https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js; object-src 'self'",
   "content_security_policy": "script-src 'self' https://code.jquery.com/jquery-3.3.1.slim.min.js; object-src 'self'",
   "content_security_policy": "script-src 'self' https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js; object-src 'self'",
+  "content_security_policy": "img-src 'self' https://www.google.com/favicon.ico; object-src 'self'; script-src 'self'",
   "manifest_version": 2
 }
