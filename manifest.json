@@ -20,7 +20,7 @@
   -----END PUBLIC KEY-----",
   "oauth2": {
     "client_id": "891392447446-4jro5e1fugd7g9tfvt7mvlploegp570o.apps.googleusercontent.com",
-    "scopes":[""]
+    "scopes":["https://www.googleapis.com/auth/calendar.readonly", "https://www.googleapis.com/auth/calendar.events.readonly", "https://www.googleapis.com/auth/calendar", "https://www.googleapis.com/auth/calendar.events"]
   },
   "background": {
     "scripts": [
