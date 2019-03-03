@@ -80,7 +80,7 @@ function getCalendarUrl() {
 // retrieve rescue time api url call
 function getRescueTimeUrl() {
   var start_date = getStringDate(new Date());
-  var url = "https://www.rescuetime.com/anapi/data?key=B63JSO2MuMNikxX1chntsvpC9PLpJR7h5XCkhnwH&perspective=interval&restrict_kind=productivity&interval=minute&restrict_begin=" + start_date + "&restrict_end=" + start_date + "&format=json";
+  var url = "https://www.rescuetime.com/anapi/data?key=B632wraD8A3HtIF2ZF9nPrwRz2AIpnbWsKW_s0rY&perspective=interval&restrict_kind=productivity&interval=minute&restrict_begin=" + start_date + "&restrict_end=" + start_date + "&format=json";
   console.log(url);
   return url;
 }
@@ -237,33 +237,29 @@ function setUI(email, data, prod) {
 function setTitle(email) {
   console.log(email);
   var name = email.substr(0, email.indexOf('@'));
-  document.getElementById('title').innerHTML += name;
+  document.getElementById('title').innerHTML = "Hi, " + name;
 }
 
 function setProductivity(prod_rate) {
   var prod_html = document.getElementById('productivity');
   if(prod_rate == -2) {
-    prod_html.innerHTML += "very unproductive. Stop being distracted and go back to work NOW!!!";
+    prod_html.innerHTML = "very unproductive. Stop being distracted and go back to work NOW!!!";
   }
   else if(prod_rate == -1) {
-    prod_html.innerHTML += "unproductive. Go back to work as soon as possible!";
+    prod_html.innerHTML = "You are " + "unproductive. Go back to work as soon as possible!";
   }
   else if(prod_rate == 0) {
-    prod_html.innerHTML += "in neutral productivity.";
+    prod_html.innerHTML = "You are " + "in neutral productivity.";
   }
   else if(prod_rate == 1) {
-    prod_html.innerHTML += "productive. Keeps moving forward!";
+    prod_html.innerHTML = "You are " + "productive. Keeps moving forward!";
   }
   else if(prod_rate == 2) {
-    prod_html.innerHTML += "very productive! Congratulations and keep being productive!"
+    prod_html.innerHTML = "You are " + "very productive! Congratulations and keep being productive!"
   }
 }
 
 function showTests(data) {
   // TODO: do something here
-  console.log("tests");
-  for(let i = 0; i < data.length; i += 1) {
-    console.log(data[i].primary);
-  }
 }
 // END MANIPULATING FRONT-END
