@@ -3,7 +3,7 @@
   "version": "1.0",
   "description": "Friendly Reminder, help you get back to your life.",
   "permissions": [
-     "identity"
+     "identity", "https://rescuetime.com/*"
    ],
   "manifest_version": 2,
   "browser_action": {
