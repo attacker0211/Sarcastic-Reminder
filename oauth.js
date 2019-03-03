@@ -187,7 +187,7 @@ function handleProductivityData(result, data) {
   // check time period to get productivity
   for (i in result) {
     var datetime = result[i][0]; // x is current time date
-    if (checkMatchCurrentDateTime(datetime)) {
+    if(checkMatchCurrentDateTime(datetime)) {
       var prod = result[i][3];
       console.log("prod rate is")
       console.log(prod);
@@ -220,8 +220,7 @@ function retrieveProductivityData(data) {
       }
     }
     xhr.send();
-  }, 1000);
-
+  }, 10000);
 }
 
 // START MANIPULATING FRONT-END
