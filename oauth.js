@@ -25,6 +25,15 @@ function main(token) {
   });
 }
 
+function handleEventsData(data) {
+  let returnEvents = data.items;
+  console.log(data.summary);
+  console.log(returnEvents);
+  retrieveProductivityData(data);
+}
+
+// START HANDLE DATE DATA/OBJECT
+// convert a date object to string object
 function getStringDate(date) {
   var year = date.getFullYear();
   var month = ("0" + (date.getMonth() + 1)).slice(-2);
@@ -33,77 +42,108 @@ function getStringDate(date) {
   return date_str;
 }
 
+function getStringDateTime(date) {
+  var string_date = getStringDate(date);
+  var time = ("0" + date.getHours()).slice(-2) + ":00:00";
+  var datetime = string_date + 'T' + time;
+  return datetime;
+}
+// get end date (string) to set to calendar url
 function getEndStringDate() {
-  var end_date = new Date((today.getTime() + 7*24*60*60*1000));
+  var today = new Date();
+  var end_date = new Date(today.getTime() + 7*24*60*60*1000);
   return getStringDate(end_date);
 }
 
+// check match current datetime
+function checkMatchCurrentDateTime(datetime) {
+  var current_datetime = getStringDateTime(new Date());
+  return current_datetime === datetime; // careful with this
+}
+// END HANDLE DATE DATA/OBJECT
+
+// START RETRIEVE API URL
 // retrieve api call url from today to the next 7 days
 function getCalendarUrl() {
-  var today_date = new Date();
-  var start_date = getStringDate(today_date);
+  var start_date = getStringDate(new Date());
   var end_date = getEndStringDate();
-  var url = "https://www.googleapis.com/calendar/v3/calendars/primary/events?timeMax=" + start_date + "T12%3A00%3A00Z&timeMin=" + end_date + "T12%3A00%3A00Z&key=AIzaSyA3Ph01ZChAs9Tr5Fo19XTT38OsZxU4yzw";
+  var url = "https://www.googleapis.com/calendar/v3/calendars/primary/events?timeMax=" + end_date + "T12%3A00%3A00Z&timeMin=" + start_date + "T12%3A00%3A00Z&key=AIzaSyA3Ph01ZChAs9Tr5Fo19XTT38OsZxU4yzw";
+  console.log(url);
   return url;
 }
 
 // retrieve rescue time api url call
 function getRescueTimeUrl() {
-  var today_date = new Date();
-  var start_date = getTodayStringDate(today_date);
-  var url = "https://www.rescuetime.com/anapi/data?key=B632wraD8A3HtIF2ZF9nPrwRz2AIpnbWsKW_s0rY&perspective=interval&restrict_kind=productivity&interval=minute&restrict_begin=" + today_date + "&restrict_end=" + today_date + "&format=json";
+  var start_date = getStringDate(new Date());
+  var url = "https://www.rescuetime.com/anapi/data?key=B632wraD8A3HtIF2ZF9nPrwRz2AIpnbWsKW_s0rY&perspective=interval&restrict_kind=productivity&interval=minute&restrict_begin=" + start_date + "&restrict_end=" + start_date + "&format=json";
+  console.log(url);
+  return url;
 }
+// END RETRIEVE API URL
 
-function handleEventsData(data) {
-  let returnEvents = data.items;
-  console.log(data.summary);
-  console.log(returnEvents);
-  for(let i = 0; i < returnEvents.length; i += 1) {
-    if(returnEvents[i].status == "confirmed") {
-      console.log(returnEvents[i]);
-      console.log(returnEvents[i].summary);
-      var s = returnEvents[i].start["dateTime"];
-      var e = returnEvents[i].end["dateTime"];
+function handleProductivityData(result, data) {
+  console.log(result); 
+  // check time period to get productivity
+  for (i in result) {
+    var datetime = result[i][0]; // x is current time date
+    if (checkMatchCurrentDateTime(datetime)) {
+      var prod = result[i][3];
+      console.log(prod);
+      // TODO: add a function here to alert shit
+      break;
     }
   }
-
-  // set user name at welcome title
-  setTitle(data.summary);
-
-  // tell user their productivity rate
-  prod_rate = 2;
-  setProductivity(prod_rate);
+  setUI(data.summary);
 }
 
 // return productivity level
-function retrieveCurrentProductivity() {
+function retrieveProductivityData(data) {
   //get API data & productivity
   var xhr = new XMLHttpRequest();
   var url = getRescueTimeUrl();
-  xhr.open("GET", url, true);
 
+  xhr.open("GET", url, true);
   xhr.onreadystatechange = function() {
     if (xhr.readyState == 4) {
-      var resp = JSON.parse(xhr.responseText);
-      var result = resp.rows;
-      console.log(result);
-      console.log(datetime);
-      // check time period to get productivity
-      for (i in result){
-        var x = result[i][0];
-        if (x === datetime){
-          prod = result[i][3];
-          console.log(prod);
-          break;
-        }
-      }
+      var responses = JSON.parse(xhr.responseText);
+      // responses.rows are arrays of productivity over time
+      handleProductivityData(responses.rows, data);
     }
   }
-
   xhr.send();
+
+  //get API data & productivity
+  // var xhr = new XMLHttpRequest();
+  // xhr.open("GET", url, true);
+  //
+  // xhr.onreadystatechange = function() {
+  //   if (xhr.readyState == 4) {
+  //     var resp = JSON.parse(xhr.responseText);
+  //     var result = resp.rows;
+  //     console.log(result);
+  //     // check time period to get productivity
+  //     for (i in result){
+  //       var datetime = result[i][0]; // current_datetime
+  //       if (checkMatchCurrentDateTime(datetime)){
+  //         prod = result[i][3];
+  //         console.log(prod);
+  //         break;
+  //       }
+  //     }
+  //   }
+  // }
+
+  // xhr.send();
 }
 
-// front-end thingy
+// START MANIPULATING FRONT-END
+function setUI(email, prod) {
+  // set user name at welcome title
+  setTitle(email);
+  // tell user their productivity rate
+  setProductivity(prod);
+}
+
 function setTitle(email) {
   var name = email.substr(0, email.indexOf('@'));
   document.getElementById('title').innerHTML += name;
@@ -127,3 +167,4 @@ function setProductivity(prod_rate) {
     prod_html.innerHTML += "very productive! Congratulations and keep being productive!"
   }
 }
+// END MANIPULATING FRONT-END
