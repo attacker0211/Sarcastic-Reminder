@@ -3,9 +3,8 @@
   "version": "1.0",
   "description": "Friendly Reminder, help you get back to your life.",
   "permissions": [
-     "identity"
-   ],
-  "manifest_version": 2,
+    "identity", "activeTab", "declarativeContent", "storage"
+  ],
   "browser_action": {
     "default_title": "Friendly Reminder, help you get back to your life."
   },
@@ -20,12 +19,18 @@
   -----END PUBLIC KEY-----",
   "oauth2": {
     "client_id": "891392447446-4jro5e1fugd7g9tfvt7mvlploegp570o.apps.googleusercontent.com",
-    "scopes":["https://www.googleapis.com/auth/calendar.readonly", "https://www.googleapis.com/auth/calendar.events.readonly", "https://www.googleapis.com/auth/calendar", "https://www.googleapis.com/auth/calendar.events"]
+    "scopes":[
+      "https://www.googleapis.com/auth/calendar.readonly", "https://www.googleapis.com/auth/calendar.events.readonly", "https://www.googleapis.com/auth/calendar", "https://www.googleapis.com/auth/calendar.events"
+    ]
   },
   "background": {
     "scripts": [
       "background.js"
     ],
     "persistent": false
-  }
+  },
+  "content_security_policy": "script-src 'self' https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js; object-src 'self'",
+  "content_security_policy": "script-src 'self' https://code.jquery.com/jquery-3.3.1.slim.min.js; object-src 'self'",
+  "content_security_policy": "script-src 'self' https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js; object-src 'self'",
+  "manifest_version": 2
 }
