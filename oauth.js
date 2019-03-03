@@ -230,7 +230,9 @@ function setUI(email, data, prod) {
   // tell user their productivity rate
   setProductivity(prod);
   // show tests you will have
-  showTests(data);
+  // function(data) {
+  //   showTests(data);
+  // }
 }
 
 function setTitle(email) {
@@ -258,7 +260,21 @@ function setProductivity(prod_rate) {
   }
 }
 
+function createTestInfo() {
+  
+};
 function showTests(data) {
   // TODO: do something here
+  num_tests = 0;
+  tests = [];
+  for (let i = 0; i < data.length; i += 1) {
+    if(data[i].summary.toLowerCase().includes("test")) {
+      num_tests += 1;
+      tests.push(data[i].summary);
+    }
+  }
+  if(num_tests) {
+    createTestInfo(num_tests, tests);
+  }
 }
 // END MANIPULATING FRONT-END
