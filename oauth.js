@@ -268,15 +268,7 @@ function setProductivity(prod_rate) {
   }
 }
 
-function createTestInfo(num_tests, tests) {
-  for(let i = 0; i < num_tests; i += 1) {
-    test_div.innerHTML += "<h4>" +  "</h4>";
-
-  }
-
-};
 function showTests(data) {
-  // TODO: do something here
   var test_div = document.getElementById("show-tests");
   var res = "";
   num_tests = 0;
