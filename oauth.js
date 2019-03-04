@@ -85,33 +85,32 @@ function getRescueTimeUrl() {
   return url;
 }
 // END RETRIEVE API URL
+function checkImportantEvent(summary, status) {
+  return summary && (status === "confirmed") && summary.toLowerCase().includes("test");
+}
+
+function calculateDiff(incoming) {
+  var today = new Date();
+  var t2 = (parseDate(incoming)).getTime();
+  var t1 = today.getTime();
+  //compute days difference
+  var diff = Math.ceil(Math.abs(t2-t1)/(24*60*60*1000));
+  return diff;
+}
 
 function daysToNextTest(data) {
   var result = [8];
-  console.log("test data");
-  console.log(data);
-  var today = new Date();
   var returnEvents = data.items;
   if(returnEvents != null) {
     for (let i = 0; i < returnEvents.length; i += 1) {
-      // console.log("this function runs!");
-      if(returnEvents[i].summary != null && returnEvents[i].status == "confirmed") {
-        if (returnEvents[i].summary.toLowerCase().includes("test")) {
-          console.log(returnEvents[i].summary);
-          var incoming = (returnEvents[i].start["dateTime"]).substring(0,10);
-          var t2 = (parseDate(incoming)).getTime();
-          var t1 = today.getTime();
-          //compute days difference
-          var diff = Math.ceil(Math.abs(t2-t1)/(24*60*60*1000));
-          result.push(diff);
-        }
+      if(checkImportantEvent(returnEvents[i].summary, returnEvents[i].status)) {
+        var incoming = (returnEvents[i].start["dateTime"]).substring(0,10);
+        var diff = calculateDiff(incoming);
+        result.push(diff);
       }
     }
   }
-
-  console.log(result);
   var countdown = Math.min(...result);
-  console.log(countdown);
   return countdown;
 }
 
@@ -241,9 +240,7 @@ function setUI(email, data, prod) {
   // tell user their productivity rate
   setProductivity(prod);
   // show tests you will have
-  // function(data) {
-  //   showTests(data);
-  // }
+  showTests(data);
 }
 
 function setTitle(email) {
@@ -271,21 +268,25 @@ function setProductivity(prod_rate) {
   }
 }
 
-function createTestInfo() {
+function createTestInfo(num_tests, tests) {
+  for(let i = 0; i < num_tests; i += 1) {
+    test_div.innerHTML += "<h4>" +  "</h4>";
+
+  }
 
 };
 function showTests(data) {
   // TODO: do something here
+  var test_div = document.getElementById("show-tests");
+  var res = "";
   num_tests = 0;
-  tests = [];
   for (let i = 0; i < data.length; i += 1) {
     if(data[i].summary.toLowerCase().includes("test")) {
       num_tests += 1;
-      tests.push(data[i].summary);
+      res += "<h4> You have " + data[i].summary + " coming up!</h4>";
     }
   }
-  if(num_tests) {
-    createTestInfo(num_tests, tests);
-  }
+  res += "<h4>You have total of " + num_tests + " coming up next week! </h4>";
+  test_div = res;
 }
 // END MANIPULATING FRONT-END

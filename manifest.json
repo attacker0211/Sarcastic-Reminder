@@ -30,8 +30,7 @@
   },
   "background": {
     "scripts": [
-      "background.js",
-      "noti.js"
+      "background.js"
     ],
     "persistent": false
   },
