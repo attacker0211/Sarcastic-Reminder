@@ -80,7 +80,7 @@ function getCalendarUrl() {
 // retrieve rescue time api url call
 function getRescueTimeUrl() {
   var start_date = getStringDate(new Date());
-  var url = "https://www.rescuetime.com/anapi/data?key=B632wraD8A3HtIF2ZF9nPrwRz2AIpnbWsKW_s0rY&perspective=interval&restrict_kind=productivity&interval=minute&restrict_begin=" + start_date + "&restrict_end=" + start_date + "&format=json";
+  var url = "https://www.rescuetime.com/anapi/data?key=B632wraD8A3HtIF2ZF9nPrwRz2AIpnbWsKW_s0rY&perspective=interval&restrict_kind=productivity&interval=hour&restrict_begin=" + start_date + "&restrict_end=" + start_date + "&format=json";
   console.log(url);
   return url;
 }
