@@ -88,19 +88,30 @@ function getRescueTimeUrl() {
 
 function daysToNextTest(data) {
   var result = [8];
+  console.log("test data");
+  console.log(data);
   var today = new Date();
-  for (let i = 0; i < data.length; i += 1) {
-    console.log(data[i].summary);
-    if (data[i].summary.toLowerCase().includes("test")) {
-      var incoming = (data[i].start["dateTime"]).substring(0,10);
-      var t2 = (parseDate(incoming)).getTime();
-      var t1 = today.getTime();
-      //compute days difference
-      var diff =  Math.ceil((t2-t1)/(24*60*60*1000));
-      result.push(diff);
+  var returnEvents = data.items;
+  if(returnEvents != null) {
+    for (let i = 0; i < returnEvents.length; i += 1) {
+      // console.log("this function runs!");
+      if(returnEvents[i].summary != null && returnEvents[i].status == "confirmed") {
+        if (returnEvents[i].summary.toLowerCase().includes("test")) {
+          console.log(returnEvents[i].summary);
+          var incoming = (returnEvents[i].start["dateTime"]).substring(0,10);
+          var t2 = (parseDate(incoming)).getTime();
+          var t1 = today.getTime();
+          //compute days difference
+          var diff = Math.ceil(Math.abs(t2-t1)/(24*60*60*1000));
+          result.push(diff);
+        }
+      }
     }
   }
-  var countdown = Math.min.apply(null,result);
+
+  console.log(result);
+  var countdown = Math.min(...result);
+  console.log(countdown);
   return countdown;
 }
 
@@ -145,7 +156,7 @@ function messType(prod, data) {
 }
 
 function genMess(data, prod) {
-  var type = messType(daysToNextTest(data), prod);
+  var type = messType(prod, data);
   var t0 = [""];
   var t1 = ["You have an exam in a few days, better start studying!", "Have you checked what will be on the exam?", "An important exam in a few days! Have you worked on some past samples?"];
   var tneg1 = ["Exam tomorrow! Be more productive!", "Exam tomorrow! Do something please.", "You need to work harder than that for the exam tomorrow!"];
@@ -183,7 +194,6 @@ function genMess(data, prod) {
 }
 
 function handleProductivityData(result, data) {
-  console.log(result);
   // check time period to get productivity
   for (i in result) {
     var datetime = result[i][0]; // x is current time date
@@ -195,6 +205,7 @@ function handleProductivityData(result, data) {
       var message = genMess(data, prod);
       if(message != null) {
         alert(message);
+        console.log(message);
       }
       else {
         alert("You have nothing to do.");
@@ -261,7 +272,7 @@ function setProductivity(prod_rate) {
 }
 
 function createTestInfo() {
-  
+
 };
 function showTests(data) {
   // TODO: do something here
