@@ -72,7 +72,7 @@ function checkMatchCurrentDateTime(datetime) {
 function getCalendarUrl() {
   var start_date = getStringDate(new Date());
   var end_date = getEndStringDate();
-  var url = "https://www.googleapis.com/calendar/v3/calendars/primary/events?timeMax=" + end_date + "T12%3A00%3A00Z&timeMin=" + start_date + "T12%3A00%3A00Z&key=YourAPIKey";
+  var url = "https://www.googleapis.com/calendar/v3/calendars/primary/events?timeMax=" + end_date + "T12%3A00%3A00Z&timeMin=" + start_date + "T12%3A00%3A00Z&key=YourGoogleAPIKey";
   console.log(url);
   return url;
 }
