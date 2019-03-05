@@ -72,7 +72,7 @@ function checkMatchCurrentDateTime(datetime) {
 function getCalendarUrl() {
   var start_date = getStringDate(new Date());
   var end_date = getEndStringDate();
-  var url = "https://www.googleapis.com/calendar/v3/calendars/primary/events?timeMax=" + end_date + "T12%3A00%3A00Z&timeMin=" + start_date + "T12%3A00%3A00Z&key=AIzaSyA3Ph01ZChAs9Tr5Fo19XTT38OsZxU4yzw";
+  var url = "https://www.googleapis.com/calendar/v3/calendars/primary/events?timeMax=" + end_date + "T12%3A00%3A00Z&timeMin=" + start_date + "T12%3A00%3A00Z&key=YourAPIKey";
   console.log(url);
   return url;
 }
@@ -80,7 +80,7 @@ function getCalendarUrl() {
 // retrieve rescue time api url call
 function getRescueTimeUrl() {
   var start_date = getStringDate(new Date());
-  var url = "https://www.rescuetime.com/anapi/data?key=B632wraD8A3HtIF2ZF9nPrwRz2AIpnbWsKW_s0rY&perspective=interval&restrict_kind=productivity&interval=hour&restrict_begin=" + start_date + "&restrict_end=" + start_date + "&format=json";
+  var url = "https://www.rescuetime.com/anapi/data?key=YourRescueTimeAPIKey&perspective=interval&restrict_kind=productivity&interval=hour&restrict_begin=" + start_date + "&restrict_end=" + start_date + "&format=json";
   console.log(url);
   return url;
 }
